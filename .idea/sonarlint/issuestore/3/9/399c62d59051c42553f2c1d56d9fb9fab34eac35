@@ -1,0 +1,7 @@
+
+7
+java:S1220""Move this file to a named package.8È×éÑƒ/
+]
+java:S1874"=Remove this use of "ElasticsearchTemplate"; it is deprecated.(õ°½Òûÿÿÿÿ8È×éÑƒ/
+Y
+java:S1068"9Remove this unused "elasticsearchTemplate" private field.(õ°½Òûÿÿÿÿ8È×éÑƒ/
