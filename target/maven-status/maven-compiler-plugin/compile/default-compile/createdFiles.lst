@@ -1,0 +1,10 @@
+xmetric/appender/MetricAppender.class
+xmetric/config/MetricConfig.class
+xmetric/config/EsConfig.class
+xmetric/appender/IMetricAppender.class
+xmetric/builder/MetricBuilder.class
+xmetric/appender/EsMetricAppender.class
+xmetric/util/FileUtil.class
+xmetric/appender/KafkaMetricAppender.class
+xmetric/es/EsRestClient.class
+xmetric/XMetric.class
