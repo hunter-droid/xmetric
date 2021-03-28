@@ -1,7 +1,9 @@
 package xmetric.appender;
 
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import xmetric.builder.MetricBuilder;
 import xmetric.config.MetricConfig;
 import xmetric.es.EsRestClient;
@@ -20,6 +22,7 @@ import java.util.Map;
 public class EsMetricAppender extends MetricAppender {
 
 
+
     public EsMetricAppender(MetricConfig metricConfig) {
         super(metricConfig);
     }
@@ -28,7 +31,7 @@ public class EsMetricAppender extends MetricAppender {
     public void metricOne(String metricName, MetricBuilder metricBuilder) throws IOException {
 
         String indexName = MessageFormat.format("x-metric-{0}"
-                , new SimpleDateFormat(metricConfig.getPattern()));
+                , new SimpleDateFormat(metricConfig.getPattern()).format(new Date()));
 
         IndexRequest indexRequest = new IndexRequest(indexName);
 
@@ -41,7 +44,8 @@ public class EsMetricAppender extends MetricAppender {
         map.put("metricTime", new Date());
         indexRequest.source(map);
 
-        EsRestClient.getInstance().index(indexRequest, RequestOptions.DEFAULT);
+        RestHighLevelClient restHighLevelClient = EsRestClient.getInstance(metricConfig.getEsConfigs());
+        IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
     }
 
     @Override

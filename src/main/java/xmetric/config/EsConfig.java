@@ -11,7 +11,17 @@ public class EsConfig {
 
     private String host;
 
+    private Integer port;
+
     private String userName;
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
     private String passWord;
 

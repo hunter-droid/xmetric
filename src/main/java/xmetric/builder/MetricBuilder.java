@@ -2,6 +2,7 @@ package xmetric.builder;
 
 import xmetric.appender.IMetricAppender;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class MetricBuilder {
 
     public MetricBuilder(List<IMetricAppender> metrics) {
         this.metrics = metrics;
+        this.tags=new HashMap<>();
     }
 
     public MetricBuilder withTag(String name, String value) {

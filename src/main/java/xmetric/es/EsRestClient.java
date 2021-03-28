@@ -18,19 +18,24 @@ import java.util.List;
  * @date 2021/3/16 16:51
  */
 public class EsRestClient {
+    private static RestHighLevelClient restHighLevelClient;
 
-    public static RestHighLevelClient getInstance() {
-        List<EsConfig> esConfigs = new ArrayList<EsConfig>();
+    public static RestHighLevelClient getInstance(List<EsConfig> esConfigs) {
+        if (restHighLevelClient != null) {
+            return restHighLevelClient;
+        }
         HttpHost httpHosts[] = new HttpHost[esConfigs.size()];
         CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
         esConfigs.forEach(config -> {
-            HttpHost httpHost = new HttpHost(config.getHost());
+            HttpHost httpHost = new HttpHost(config.getHost(), config.getPort(), "http");
+            httpHosts[esConfigs.indexOf(config)] = httpHost;
             if (config.getUserName() != null)
                 credentialsProvider.setCredentials(new AuthScope(httpHost)
                         , new UsernamePasswordCredentials(config.getUserName(), config.getPassWord()));
         });
         RestClientBuilder builder = RestClient.builder(httpHosts);
         builder.setHttpClientConfigCallback(f -> f.setDefaultCredentialsProvider(credentialsProvider));
-        return new RestHighLevelClient(builder);
+        restHighLevelClient = new RestHighLevelClient(builder);
+        return restHighLevelClient;
     }
 }
